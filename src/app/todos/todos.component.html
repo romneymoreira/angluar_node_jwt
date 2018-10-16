@@ -1,0 +1,95 @@
+<div>
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <button type="button" class="btn btn-primary pull-right" (click)="newPost()" tooltip="Editar">
+                            <i class="fa fa-edit"> New</i>
+                        </button>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    To do
+                </div>
+                <div class="card-body table-responsive">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>userId</th>
+                                <th>id</th>
+                                <th>title</th>
+                                <th>completed</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let todo of todos">
+                                <td>{{todo.userId}}</td>
+                                <td>{{todo.id}}</td>
+                                <td>{{todo.title}}</td>
+                                <td>
+                                    <span *ngIf="todo.completed" class="badge badge-primary">Yes</span>
+                                    <span *ngIf="!todo.completed" class="badge badge-warning">No</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-xs btn-primary btn-gradient" (click)="show(todo)" tooltip="Editar">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form name="formtodos" id="formtodos" [formGroup]="formtodos">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Edit Post</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-12" [ngClass]="mostrarCSSErro('title')">
+                            <label><b>Title</b></label>
+                            <input type="text" [(ngModel)]="todo.title" formControlName="title" class="form-control" name="title" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label><b>Completed?</b></label>
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" name="completed" formControlName="completed" checked="todo.completed" [(ngModel)]="todo.completed" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">
+                                {{todo.completed ? 'Yes' : 'No'}}
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="pull-left">
+                        <button class="btn btn-default" (click)="hide()"> Cancel </button>&nbsp;&nbsp;
+                        <button *ngIf="btnedit" class="btn btn-success" (click)="save()"> Save </button>
+                        <button *ngIf="btnnew" class="btn btn-success" (click)="saveNew()"> Save </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

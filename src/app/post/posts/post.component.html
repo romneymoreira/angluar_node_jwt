@@ -1,0 +1,84 @@
+<div>
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <button type="button" class="btn btn-primary pull-right" (click)="newPost()" tooltip="Editar">
+                        <i class="fa fa-edit"> New</i>
+                    </button>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    Posts
+
+                </div>
+                <div class="card-body table-responsive">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped row-border hover">
+                        <thead>
+                            <tr>
+                                <th>userId</th>
+                                <th>id</th>
+                                <th>title</th>
+                                <th>body</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let post of posts">
+                                <td>{{post.userId}}</td>
+                                <td>{{post.id}}</td>
+                                <td>{{post.title}}</td>
+                                <td>{{post.body}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-xs btn-primary btn-gradient" (click)="show(post)" tooltip="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form name="formposts" id="formposts" [formGroup]="formposts">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Edit Post</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" [ngClass]="mostrarCSSErro('title')">
+                            <label><b>Title</b></label>
+                            <input type="text" [(ngModel)]="post.title" formControlName="title" class="form-control" name="title" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" [ngClass]="mostrarCSSErro('body')">
+                            <label><b>Body</b></label>
+                            <textarea [(ngModel)]="post.body" class="form-control" name="body" formControlName="body" rows="4" maxlength="2000"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="pull-left">
+                        <button class="btn btn-default" (click)="hide()"> Cancel </button>&nbsp;&nbsp;
+                        <button *ngIf="btnedit" class="btn btn-success" (click)="save()"> Save </button>
+                        <button *ngIf="btnnew" class="btn btn-success" (click)="saveNew()"> Save </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
